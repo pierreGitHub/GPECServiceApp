@@ -4,11 +4,14 @@
  */
 package cnam.gpec.business;
 
+import cnam.gpec.business.auth.CompteAcces;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,7 +36,48 @@ public class Evaluation implements Serializable {
     @Column(name = "date_validation_dt")
     @Temporal(TemporalType.DATE)
     private Date dateValidationDt;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_campagne")
+    private Campagne campagne;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_metier")
+    private Metier metier;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_personne")
+    private Personne personne;
 
+    public Personne getPersonne() {
+        return personne;
+    }
+
+    public void setPersonne(Personne personne) {
+        this.personne = personne;
+    }
+
+    
+    
+    
+    public Metier getMetier() {
+        return metier;
+    }
+
+    public void setMetier(Metier metier) {
+        this.metier = metier;
+    }
+
+    
+    
+    public Campagne getCampagne() {
+        return campagne;
+    }
+
+    public void setCampagne(Campagne campagne) {
+        this.campagne = campagne;
+    }
+    
     public Integer getIdEvaluation() {
         return idEvaluation;
     }

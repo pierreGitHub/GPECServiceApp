@@ -4,11 +4,14 @@
  */
 package cnam.gpec.business;
 
+import cnam.gpec.business.auth.CompteAcces;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,7 +40,21 @@ public class Personne implements Serializable {
     private String idEpicea;
     @Column(name = "estAdmin")
     private boolean estAdmin;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_compte_acces")
+    private CompteAcces compteAcces;
 
+    public CompteAcces getCompteAcces() {
+        return compteAcces;
+    }
+
+    public void setCompteAcces(CompteAcces compteAcces) {
+        this.compteAcces = compteAcces;
+    }
+
+    
+    
     public Integer getIdPersonne() {
         return idPersonne;
     }

@@ -9,6 +9,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,7 +33,35 @@ public class Centre implements Serializable {
     private String intituleLongLb;
     @Column(name = "intitule_court_lb")
     private String intituleCourtLb;
+    
+    @ManyToOne
+    @Column(name = "id_centre")
+    private Centre centrePere;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_region")
+    private Region region;
 
+    public Centre getCentrePere() {
+        return centrePere;
+    }
+
+    public void setCentrePere(Centre centrePere) {
+        this.centrePere = centrePere;
+    }
+
+    
+    
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    
+    
     public Integer getIdCentre() {
         return idCentre;
     }
