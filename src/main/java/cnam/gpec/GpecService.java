@@ -42,7 +42,7 @@ public class GpecService {
         closeDao();
         
         if (competenceFind != null) {
-            return competenceFind.getIntituleCompetence();
+            return competenceFind.getIntituleCompetenceLb();
         } else {
             return "Compétence non trouvée";
         }

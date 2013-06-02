@@ -55,7 +55,7 @@ public class CompetenceDAO {
            //competenceFind = competencesList.get(1);
             competenceFind = em.find(Competence.class,id.intValue());
             em.getTransaction().commit();
-            System.err.println("getCompetence with id=" + competenceFind.getIdCompetence());
+            System.out.println("getCompetence with id=" + competenceFind.getIdCompetence());
             
             
             return (competenceFind);
