@@ -5,13 +5,13 @@
 package cnam.gpec.business;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -33,7 +33,13 @@ public class Metier implements Serializable {
     private String descriptionMetierLb;
     @Column(name = "verrouiller_metier")
     private boolean verrouillerMetier;
+    
+    
+  
 
+    
+    
+    
     public Integer getIdMetier() {
         return idMetier;
     }
