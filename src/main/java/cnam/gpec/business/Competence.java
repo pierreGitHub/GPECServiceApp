@@ -34,7 +34,7 @@ public class Competence implements Serializable {
     private String intituleCompetenceLb;
     @Column(name = "description_competence_lb")
     private String descriptionCompetenceLb;
-    @Column(name = "date_suppression_competence_dt")
+    @Column(name = "date_suppression_competence_lb")
     @Temporal(TemporalType.DATE)
     private Date dateSuppressionCompetenceDt;
     
@@ -43,7 +43,7 @@ public class Competence implements Serializable {
     private Domaine domaine;
 
     public Domaine getDomaine() {
-        return domaine;
+       return domaine;
     }
 
     public void setDomaine(Domaine domaine) {

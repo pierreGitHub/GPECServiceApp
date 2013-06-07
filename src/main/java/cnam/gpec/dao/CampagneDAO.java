@@ -21,7 +21,7 @@ public class CampagneDAO {
     private EntityManagerFactory factory = null;
 
     public void init() {
-        factory = Persistence.createEntityManagerFactory("baseTest");
+        factory = Persistence.createEntityManagerFactory("gepc");
     }
 
     public void close() {

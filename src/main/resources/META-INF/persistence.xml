@@ -2,9 +2,9 @@
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/
 ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
- <persistence-unit name="baseTest" transaction-type="JTA">
+ <persistence-unit name="gpec" transaction-type="JTA">
  <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <jta-data-source>jdbc/baseTest</jta-data-source>
+    <jta-data-source>jdbc/gpec</jta-data-source>
        <properties>
            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
        </properties>
@@ -13,5 +13,6 @@ ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
        <property name="eclipselink.jdbc.user" value="toto"/>
       <property name="eclipselink.jdbc.password" value="password"/>
          <class>cnam.gpec.business.Competence</class>
+         <class>cnam.gpec.business.Domaine</class>
 </persistence-unit>
 </persistence>

@@ -22,7 +22,7 @@ public class CompetenceDAO {
     private EntityManagerFactory factory = null;
 
     public void init() {
-        factory = Persistence.createEntityManagerFactory("baseTest");
+        factory = Persistence.createEntityManagerFactory("gpec");
     }
 
     public void close() {
