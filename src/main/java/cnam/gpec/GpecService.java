@@ -7,9 +7,16 @@ package cnam.gpec;
 import cnam.gpec.business.Campagne;
 import cnam.gpec.business.Competence;
 import cnam.gpec.business.Evaluation;
+import cnam.gpec.business.Methode;
 import cnam.gpec.business.Metier;
+import cnam.gpec.business.Savoir;
 import cnam.gpec.business.auth.CompteAcces;
+import cnam.gpec.dao.CampagneDAO;
 import cnam.gpec.dao.CompetenceDAO;
+import cnam.gpec.dao.MethodeDAO;
+import cnam.gpec.dao.MetierDAO;
+import cnam.gpec.dao.SavoirDAO;
+import cnam.gpec.dao.auth.CompteAccesDAO;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -27,6 +34,11 @@ import javax.ejb.Stateless;
 public class GpecService {
 
     private CompetenceDAO competenceDAO;
+    private MetierDAO metierDAO;
+    private MethodeDAO methodeDAO;
+    private SavoirDAO savoirDAO;
+    private CampagneDAO campagneDAO;
+    private CompteAccesDAO compteAccesDAO;
 
     /**
      * This is a sample web service operation
@@ -42,9 +54,9 @@ public class GpecService {
     @WebMethod(operationName = "getCompetenceTest")
     public String getCompetenceTest(@WebParam(name = "idCompetence") String id) {
 
-        initDao();
+        initCompetenceDao();
         Competence competenceFind = competenceDAO.getCompetence(new Integer(id));
-        closeDao();
+        closeCompetenceDao();
 
         if (competenceFind != null) {
             return competenceFind.getIntituleCompetenceLb();
@@ -59,13 +71,42 @@ public class GpecService {
     @WebMethod(operationName = "getMetier")
     public Metier getMetier(@WebParam(name = "idMetier") String id) {
         Metier metierFind = null;
-        initDao();
-       // metierFind = competenceDAO.get(new Integer(id));
-        closeDao();
+        initMetierDao();
+        metierFind = metierDAO.getMetier(new Integer(id));
+        closeMetierDao();
 
         return metierFind;
 
     }
+    
+     /**
+     * Récupérer un méthode à partir de son identifiant
+     */
+    @WebMethod(operationName = "getMethode")
+    public Methode getMethode(@WebParam(name = "idMethode") String id) {
+        Methode methodeFind = null;
+        initMethodeDao();
+        methodeFind = methodeDAO.getMethode(new Integer(id));
+        closeMethodeDao();
+
+        return methodeFind;
+
+    }
+    
+     /**
+     * Récupérer un savoir à partir de son identifiant
+     */
+    @WebMethod(operationName = "getSavoir")
+    public Savoir getSavoir(@WebParam(name = "idSavoir") String id) {
+        Savoir savoirFind = null;
+        initSavoirDao();
+        savoirFind = savoirDAO.getSavoir(new Integer(id));
+        closeSavoirDao();
+
+        return savoirFind;
+
+    }
+    
 
     /**
      * Récupérer une compétence à partir de son identifiant
@@ -73,24 +114,24 @@ public class GpecService {
     @WebMethod(operationName = "getCompetence")
     public Competence getCompetence(@WebParam(name = "idCompetence") String id) {
         Competence competenceFind = null;
-        initDao();
+        initCompetenceDao();
         competenceFind = competenceDAO.getCompetence(new Integer(id));
-        closeDao();
+        closeCompetenceDao();
 
         return competenceFind;
 
     }
 
     /**
-     * Récupérer une compétence à partir de son identifiant
+     * Récupérer une campagne à partir de son identifiant
      */
     @WebMethod(operationName = "getCampagne")
     public Campagne getCampagne(@WebParam(name = "idCampagne") String id) {
         Campagne campagneFind = null;
 
-        initDao();
-        //TODO Partie DAO
-        closeDao();
+        initCompetenceDao();
+        campagneFind = campagneDAO.getCampagne(new Integer(id));
+        closeCompetenceDao();
 
         return campagneFind;
     }
@@ -101,9 +142,9 @@ public class GpecService {
     @WebMethod(operationName = "getCampagneListENCOURS")
     public List<Campagne> getCampagneListENCOURS(@WebParam(name = "idCompteAcces") String id) {
         List<Campagne> campagneList = null;
-        initDao();
+        initCompetenceDao();
         //TODO Partie dao
-        closeDao();
+        closeCompetenceDao();
 
         return campagneList;
     }
@@ -114,9 +155,9 @@ public class GpecService {
     @WebMethod(operationName = "getCampagneListTERMINEE")
     public List<Campagne> getCampagneListTERMINEE(@WebParam(name = "idCompteAcces") String id) {
         List<Campagne> campagneList = null;
-        initDao();
+        initCompetenceDao();
         //TODO Partie dao
-        closeDao();
+        closeCompetenceDao();
 
         return campagneList;
     }
@@ -127,9 +168,9 @@ public class GpecService {
     @WebMethod(operationName = "persistCampagne")
     public String persistCampagne(@WebParam(name = "campagne") Campagne campagne) {
         String messageCreate = null;
-        initDao();
+        initCompetenceDao();
         //TODO Partie dao
-        closeDao();
+        closeCompetenceDao();
 
 
         return messageCreate;
@@ -141,9 +182,9 @@ public class GpecService {
     @WebMethod(operationName = "persistMetier")
     public String persistMetier(@WebParam(name = "metier") Metier metier) {
         String messageCreate = null;
-        initDao();
+        initCompetenceDao();
         //TODO Partie dao
-        closeDao();
+        closeCompetenceDao();
 
 
         return messageCreate;
@@ -155,9 +196,9 @@ public class GpecService {
     @WebMethod(operationName = "persistCompetence")
     public String persistCompetence(@WebParam(name = "competence") Competence competence) {
         String messageCreate = null;
-        initDao();
+        initCompetenceDao();
         //TODO Partie dao
-        closeDao();
+        closeCompetenceDao();
 
 
         return messageCreate;
@@ -169,9 +210,9 @@ public class GpecService {
     @WebMethod(operationName = "getEvaluationListENCOURS")
     public List<Evaluation> getEvaluationListENCOURS(@WebParam(name = "idCompteAcces") String id) {
         List<Evaluation> evaluationList = null;
-        initDao();
+        initCompetenceDao();
         //TODO Partie dao
-        closeDao();
+        closeCompetenceDao();
 
         return evaluationList;
     }
@@ -182,9 +223,9 @@ public class GpecService {
     @WebMethod(operationName = "getEvaluationListTERMINEE")
     public List<Evaluation> getEvaluationListTERMINEE(@WebParam(name = "idCompteAcces") String id) {
         List<Evaluation> evaluationList = null;
-        initDao();
+        initCompetenceDao();
         //TODO Partie dao
-        closeDao();
+        closeCompetenceDao();
 
         return evaluationList;
     }
@@ -195,20 +236,55 @@ public class GpecService {
     @WebMethod(operationName = "isRightsAndAuthentificated")
     public CompteAcces isRightsAndAuthentificated(@WebParam(name = "compteAcces") CompteAcces compteAcces) {
         CompteAcces compteAccesFind = null;
-        initDao();
-        //TODO Partie dao
-        closeDao();
+        initCompteAccesDao();
+        compteAccesFind = compteAccesDAO.getCompteAcces(compteAcces);
+        closeCompteAccesDao();
 
 
         return compteAccesFind;
     }
 
-    private void initDao() {
+    private void initCompetenceDao() {
         competenceDAO = new CompetenceDAO();
         competenceDAO.init();
     }
 
-    private void closeDao() {
+    private void closeCompetenceDao() {
         competenceDAO.close();
+    }
+    
+    private void initMetierDao() {
+        metierDAO = new MetierDAO();
+        metierDAO.init();
+    }
+
+    private void closeMetierDao() {
+        metierDAO.close();
+    }
+    
+    private void initMethodeDao() {
+        methodeDAO = new MethodeDAO();
+        methodeDAO.init();
+    }
+
+    private void closeMethodeDao() {
+        methodeDAO.close();
+    }
+    
+    private void initSavoirDao() {
+        savoirDAO = new SavoirDAO();
+        savoirDAO.init();
+    }
+
+    private void closeSavoirDao() {
+        savoirDAO.close();
+    }
+        private void initCompteAccesDao() {
+        compteAccesDAO = new CompteAccesDAO();
+        compteAccesDAO.init();
+    }
+
+    private void closeCompteAccesDao() {
+        compteAccesDAO.close();
     }
 }

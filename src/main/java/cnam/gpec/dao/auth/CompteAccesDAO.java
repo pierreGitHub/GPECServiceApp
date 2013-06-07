@@ -2,9 +2,10 @@
  * Gpec Cnam - Projet NFE114
  * Partie web Service
  */
-package cnam.gpec.dao;
+package cnam.gpec.dao.auth;
 
-import cnam.gpec.business.Campagne;
+import cnam.gpec.business.Savoir;
+import cnam.gpec.business.auth.CompteAcces;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -16,12 +17,12 @@ import javax.persistence.Query;
  *
  * @author pierre Chanussot
  */
-public class CampagneDAO {
+public class CompteAccesDAO {
 
     private EntityManagerFactory factory = null;
 
     public void init() {
-        factory = Persistence.createEntityManagerFactory("gepc");
+        factory = Persistence.createEntityManagerFactory("gpec");
     }
 
     public void close() {
@@ -32,32 +33,32 @@ public class CampagneDAO {
 
     /**
      *
-     * Récupère un objet Campagne à partir de son identifiant
+     * Récupère un objet Savoir à partir de son identifiant
      *
      *
      * @param id
-     * @return campagneFind
+     * @return savoirFind
      */
-    public Campagne getCampagne(Integer id) {
+    public CompteAcces getCompteAcces(CompteAcces compteAcces) {
 
-        Campagne campagneFind = null;
+        CompteAcces compteAccesFind = null;
         EntityManager em = null;
         try {
             em = factory.createEntityManager();
             em.getTransaction().begin();
             // utilisation de l'EntityManager
             
-           Query query = em.createQuery("select c from Campagne as c");
+           Query query = em.createQuery("select c from CompteAcces as m");
          //  List<Competence> competencesList = query.getResultList();
            
             System.out.println("tet");
            //competenceFind = competencesList.get(1);
-            campagneFind = em.find(Campagne.class,id.intValue());
+            compteAccesFind = em.find(CompteAcces.class,compteAcces.getIdCompteAcces());
             em.getTransaction().commit();
-            System.out.println("getCampagne with id=" + campagneFind.getIdCampagne());
+            System.out.println("getCompteAcces with id=" + compteAccesFind.getIdCompteAcces());
             
             
-            return campagneFind;
+            return (compteAccesFind);
         }
         finally {
             if (em != null) {

@@ -4,7 +4,7 @@
  */
 package cnam.gpec.dao;
 
-import cnam.gpec.business.Campagne;
+import cnam.gpec.business.Metier;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -16,12 +16,12 @@ import javax.persistence.Query;
  *
  * @author pierre Chanussot
  */
-public class CampagneDAO {
+public class MetierDAO {
 
     private EntityManagerFactory factory = null;
 
     public void init() {
-        factory = Persistence.createEntityManagerFactory("gepc");
+        factory = Persistence.createEntityManagerFactory("gpec");
     }
 
     public void close() {
@@ -32,32 +32,32 @@ public class CampagneDAO {
 
     /**
      *
-     * Récupère un objet Campagne à partir de son identifiant
+     * Récupère un objet Metier à partir de son identifiant
      *
      *
      * @param id
-     * @return campagneFind
+     * @return competenceFind
      */
-    public Campagne getCampagne(Integer id) {
+    public Metier getMetier(Integer id) {
 
-        Campagne campagneFind = null;
+        Metier metierFind = null;
         EntityManager em = null;
         try {
             em = factory.createEntityManager();
             em.getTransaction().begin();
             // utilisation de l'EntityManager
             
-           Query query = em.createQuery("select c from Campagne as c");
+           Query query = em.createQuery("select m from Metier as m");
          //  List<Competence> competencesList = query.getResultList();
            
             System.out.println("tet");
            //competenceFind = competencesList.get(1);
-            campagneFind = em.find(Campagne.class,id.intValue());
+            metierFind = em.find(Metier.class,id.intValue());
             em.getTransaction().commit();
-            System.out.println("getCampagne with id=" + campagneFind.getIdCampagne());
+            System.out.println("getMetier with id=" + metierFind.getIdMetier());
             
             
-            return campagneFind;
+            return (metierFind);
         }
         finally {
             if (em != null) {

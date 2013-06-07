@@ -4,7 +4,8 @@
  */
 package cnam.gpec.dao;
 
-import cnam.gpec.business.Campagne;
+import cnam.gpec.business.Methode;
+import cnam.gpec.business.Savoir;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -16,12 +17,12 @@ import javax.persistence.Query;
  *
  * @author pierre Chanussot
  */
-public class CampagneDAO {
+public class SavoirDAO {
 
     private EntityManagerFactory factory = null;
 
     public void init() {
-        factory = Persistence.createEntityManagerFactory("gepc");
+        factory = Persistence.createEntityManagerFactory("gpec");
     }
 
     public void close() {
@@ -32,32 +33,32 @@ public class CampagneDAO {
 
     /**
      *
-     * Récupère un objet Campagne à partir de son identifiant
+     * Récupère un objet Savoir à partir de son identifiant
      *
      *
      * @param id
-     * @return campagneFind
+     * @return savoirFind
      */
-    public Campagne getCampagne(Integer id) {
+    public Savoir getSavoir(Integer id) {
 
-        Campagne campagneFind = null;
+        Savoir savoirFind = null;
         EntityManager em = null;
         try {
             em = factory.createEntityManager();
             em.getTransaction().begin();
             // utilisation de l'EntityManager
             
-           Query query = em.createQuery("select c from Campagne as c");
+           Query query = em.createQuery("select s from Savoir as s");
          //  List<Competence> competencesList = query.getResultList();
            
             System.out.println("tet");
            //competenceFind = competencesList.get(1);
-            campagneFind = em.find(Campagne.class,id.intValue());
+            savoirFind = em.find(Savoir.class,id.intValue());
             em.getTransaction().commit();
-            System.out.println("getCampagne with id=" + campagneFind.getIdCampagne());
+            System.out.println("getSavoir with id=" + savoirFind.getIdSavoir());
             
             
-            return campagneFind;
+            return (savoirFind);
         }
         finally {
             if (em != null) {
