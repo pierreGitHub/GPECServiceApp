@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * Classe métier "CAMPAGNE"
+ * Classe métier "CAMPAGNE" test
  *
  * @author pierre chanussot
  */
