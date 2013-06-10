@@ -5,7 +5,10 @@
 package cnam.gpec.business;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -41,13 +44,26 @@ public class Competence implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_domaine")
     private Domaine domaine;
-
+    
+    //@LazyCollection(LazyCollectionOption.TRUE)
+    //@BatchSize(size = 10)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "competence")
+     private List<Methode> methodeList = new ArrayList<Methode>();
+    
     public Domaine getDomaine() {
        return domaine;
     }
 
     public void setDomaine(Domaine domaine) {
         this.domaine = domaine;
+    }
+
+    public List<Methode> getMethodeList() {
+        return methodeList;
+    }
+
+    public void setMethodeList(List<Methode> methodeList) {
+        this.methodeList = methodeList;
     }
     
     

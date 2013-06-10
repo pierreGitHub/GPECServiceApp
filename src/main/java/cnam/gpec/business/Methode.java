@@ -9,6 +9,9 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,7 +34,12 @@ public class Methode implements Serializable {
     private String intituleMethodeLb;
     @Column(name = "description_methode_lb")
     private String descriptionMethodeLb;
-
+    
+    @ManyToOne
+    @JoinColumn(name = "id_competence")
+    private Competence competence;
+    
+    
     public Integer getIdMethode() {
         return idMethode;
     }
@@ -47,6 +55,16 @@ public class Methode implements Serializable {
     public void setIntituleMethodeLb(String intituleMethodeLb) {
         this.intituleMethodeLb = intituleMethodeLb;
     }
+
+    public Competence getCompetence() {
+        return competence;
+    }
+
+    public void setCompetence(Competence competence) {
+        this.competence = competence;
+    }
+    
+    
 
     public String getDescriptionMethodeLb() {
         return descriptionMethodeLb;
