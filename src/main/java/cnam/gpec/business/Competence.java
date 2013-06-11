@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -47,8 +48,9 @@ public class Competence implements Serializable {
     
     //@LazyCollection(LazyCollectionOption.TRUE)
     //@BatchSize(size = 10)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "competence")
-     private List<Methode> methodeList = new ArrayList<Methode>();
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "competence")
+    @JoinColumn(name = "id_methode")
+    private List<Methode> methodeList = new ArrayList<Methode>();
     
     public Domaine getDomaine() {
        return domaine;

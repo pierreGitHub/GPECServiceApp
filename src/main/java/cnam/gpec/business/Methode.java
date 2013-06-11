@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -35,8 +36,7 @@ public class Methode implements Serializable {
     @Column(name = "description_methode_lb")
     private String descriptionMethodeLb;
     
-    @ManyToOne
-    @JoinColumn(name = "id_competence")
+    @ManyToOne(fetch=FetchType.LAZY)
     private Competence competence;
     
     
