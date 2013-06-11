@@ -54,6 +54,8 @@ public class CompetenceDAO {
             System.out.println("tet");
            //competenceFind = competencesList.get(1);
             competenceFind = em.find(Competence.class,id.intValue());
+            
+            competenceFind.getMethodeList();
             em.getTransaction().commit();
             System.out.println("getCompetence with id=" + competenceFind.getIdCompetence());
             
