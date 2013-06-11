@@ -13,6 +13,7 @@ import cnam.gpec.business.Savoir;
 import cnam.gpec.business.auth.CompteAcces;
 import cnam.gpec.dao.CampagneDAO;
 import cnam.gpec.dao.CompetenceDAO;
+import cnam.gpec.dao.EvaluationDAO;
 import cnam.gpec.dao.MethodeDAO;
 import cnam.gpec.dao.MetierDAO;
 import cnam.gpec.dao.SavoirDAO;
@@ -39,6 +40,7 @@ public class GpecService {
     private SavoirDAO savoirDAO;
     private CampagneDAO campagneDAO;
     private CompteAccesDAO compteAccesDAO;
+    private EvaluationDAO evaluationDAO;
 
     /**
      * This is a sample web service operation
@@ -190,8 +192,23 @@ public class GpecService {
         return messageCreate;
     }
     
+     /**
+     * Créer/modifier un évaluation
+     */
+    @WebMethod(operationName = "persistEvaluation")
+    public String persistEvaluation(@WebParam(name = "evaluation") Evaluation evaluation) {
+        String messageCreate = null;
+        initEvaluationDao();
+        //TODO Partie dao
+        closeEvaluationDao();
+
+
+        return messageCreate;
+    }
+    
+    
     /**
-     * Créer/modifier un competence
+     * Créer/modifier une competence
      */
     @WebMethod(operationName = "persistCompetence")
     public String persistCompetence(@WebParam(name = "competence") Competence competence) {
@@ -286,5 +303,14 @@ public class GpecService {
 
     private void closeCompteAccesDao() {
         compteAccesDAO.close();
+    }
+    
+        private void initEvaluationDao() {
+        evaluationDAO = new EvaluationDAO();
+        evaluationDAO.init();
+    }
+
+    private void closeEvaluationDao() {
+        evaluationDAO.close();
     }
 }

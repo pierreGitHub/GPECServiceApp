@@ -4,7 +4,6 @@
  */
 package cnam.gpec.business;
 
-import cnam.gpec.business.auth.CompteAcces;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -48,6 +47,9 @@ public class Evaluation implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_personne")
     private Personne personne;
+    
+
+    
 
     public Personne getPersonne() {
         return personne;

@@ -36,7 +36,6 @@ public class Methode implements Serializable {
     @Column(name = "description_methode_lb")
     private String descriptionMethodeLb;
     
-    @ManyToOne(fetch=FetchType.LAZY)
     private Competence competence;
     
     

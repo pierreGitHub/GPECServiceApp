@@ -52,6 +52,10 @@ public class Competence implements Serializable {
     @JoinColumn(name = "id_methode")
     private List<Methode> methodeList = new ArrayList<Methode>();
     
+//    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "competence")
+//    @JoinColumn(name = "id_savoir")
+//    private List<Savoir> savoirList = new ArrayList<Savoir>();
+    
     public Domaine getDomaine() {
        return domaine;
     }
@@ -67,6 +71,14 @@ public class Competence implements Serializable {
     public void setMethodeList(List<Methode> methodeList) {
         this.methodeList = methodeList;
     }
+
+//    public List<Savoir> getSavoirList() {
+//        return savoirList;
+//    }
+//
+//    public void setSavoirList(List<Savoir> savoirList) {
+//        this.savoirList = savoirList;
+//    }
     
     
     
