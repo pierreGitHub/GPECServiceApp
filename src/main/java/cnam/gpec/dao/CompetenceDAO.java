@@ -48,14 +48,14 @@ public class CompetenceDAO {
             em.getTransaction().begin();
             // utilisation de l'EntityManager
             
-           Query query = em.createQuery("select c from Competence as c");
+           Query query = em.createQuery("select c from Competence as c,Methode as m");
          //  List<Competence> competencesList = query.getResultList();
            
             System.out.println("tet");
            //competenceFind = competencesList.get(1);
             competenceFind = em.find(Competence.class,id.intValue());
             
-            competenceFind.getMethodeList();
+            //competenceFind.getMethodeList();
             em.getTransaction().commit();
             System.out.println("getCompetence with id=" + competenceFind.getIdCompetence());
             

@@ -48,8 +48,7 @@ public class Competence implements Serializable {
     
     //@LazyCollection(LazyCollectionOption.TRUE)
     //@BatchSize(size = 10)
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "competence")
-    @JoinColumn(name = "id_methode")
+    @OneToMany(mappedBy = "competence")
     private List<Methode> methodeList = new ArrayList<Methode>();
     
 //    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "competence")
