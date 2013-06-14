@@ -5,6 +5,7 @@
 package cnam.gpec.dao;
 
 import cnam.gpec.business.Campagne;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -64,5 +65,81 @@ public class CampagneDAO {
                 em.close();
             }
         }
+    }
+
+    /**
+     *
+     * Récupère la liste des campagnes en COURS à id du compte d'accès
+     *
+     *
+     * @param id
+     * @return campagneFind
+     */
+    public List<Campagne> getCampagneListENCOURS(Integer id) {
+        List<Campagne> campagneListFind = null;
+        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            
+           Query query = em.createQuery("select c from Campagne as c where c.estReferent.idPersonne = :id and c.verrouillerCampagne=FALSE").setParameter("id", id);
+           campagneListFind = query.getResultList();
+          
+            em.getTransaction().commit();
+          
+            return campagneListFind;
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+     /**
+     *
+     * Récupère la liste des campagnes TERMINEE à id du compte d'accès
+     *
+     *
+     * @param id
+     * @return campagneFind
+     */
+    public List<Campagne> getCampagneListTERMINEE(Integer id) {
+        List<Campagne> campagneListFind = null;
+        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            
+           Query query = em.createQuery("select c from Campagne as c where c.estReferent.idPersonne = :id and c.verrouillerCampagne=TRUE").setParameter("id", id);
+           campagneListFind = query.getResultList();
+          
+            em.getTransaction().commit();
+          
+            return campagneListFind;
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
     }
 }

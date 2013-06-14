@@ -161,22 +161,24 @@ public class GpecService {
     @WebMethod(operationName = "getCampagneListENCOURS")
     public List<Campagne> getCampagneListENCOURS(@WebParam(name = "idCompteAcces") String id) {
         List<Campagne> campagneList = null;
-        initCompetenceDao();
-        //TODO Partie dao
-        closeCompetenceDao();
+        initCampagneDao();
+        campagneList = campagneDAO.getCampagneListENCOURS(new Integer(id));
+        closeCampagneDao();
 
         return campagneList;
     }
+    
+    
 
     /**
      * Récupérer la liste des campagnes TERMINEE pour un compte d'accès donné
      */
     @WebMethod(operationName = "getCampagneListTERMINEE")
     public List<Campagne> getCampagneListTERMINEE(@WebParam(name = "idCompteAcces") String id) {
-        List<Campagne> campagneList = null;
-        initCompetenceDao();
-        //TODO Partie dao
-        closeCompetenceDao();
+         List<Campagne> campagneList = null;
+        initCampagneDao();
+        campagneList = campagneDAO.getCampagneListTERMINEE(new Integer(id));
+        closeCampagneDao();
 
         return campagneList;
     }
