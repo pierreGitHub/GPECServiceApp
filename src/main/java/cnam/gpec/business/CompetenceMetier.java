@@ -8,10 +8,13 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -19,18 +22,21 @@ import javax.persistence.Table;
  *
  * @author pierre chanussot
  */
-@Entity(name = "CompetenceMetier")
+@Entity(name = "competenceMetier")
 @Table(name = "Competence_Metier")
 public class CompetenceMetier implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id_metier")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_metier")
     private Metier metier;
     @Id
-    @Column(name = "id_competence")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_competence")
     private Competence competence;
 
+    @XmlTransient
     public Metier getMetier() {
         return metier;
     }

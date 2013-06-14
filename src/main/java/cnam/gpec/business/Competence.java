@@ -42,6 +42,9 @@ public class Competence implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dateSuppressionCompetenceDt;
     
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<CompetenceMetier> competencemetier ;
+    
    
     @ManyToOne
     @JoinColumn(name = "id_domaine")

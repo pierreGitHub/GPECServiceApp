@@ -14,5 +14,7 @@
  <class>cnam.gpec.business.Domaine</class>
      <class>cnam.gpec.business.Methode</class>
      <class>cnam.gpec.business.Savoir</class>
+      <class>cnam.gpec.business.Metier</class>
+      <class>cnam.gpec.business.CompetenceMetier</class>
   </persistence-unit>
 </persistence>

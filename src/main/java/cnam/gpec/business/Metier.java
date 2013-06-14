@@ -5,7 +5,6 @@
 package cnam.gpec.business;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -32,12 +32,14 @@ public class Metier implements Serializable {
     private Integer idMetier;
     @Column(name = "intitule_metier_lb")
     private String intituleMetierLb;
-    @Column(name = "description_metier_lb")
+    @Column(name = "decription_metier_lb")
     private String descriptionMetierLb;
     @Column(name = "verrouiller_metier")
     private boolean verrouillerMetier;
     
-        
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "metier")
+    @JoinColumns({@JoinColumn(name="id_competence"),@JoinColumn(name="id_metier")})
+    private List<CompetenceMetier> competenceMetier ;
     
     
     public Integer getIdMetier() {
@@ -72,7 +74,18 @@ public class Metier implements Serializable {
         this.verrouillerMetier = verrouillerMetier;
     }
 
+    public List<CompetenceMetier> getCompetenceMetier() {
+        return competenceMetier;
+    }
+
+    public void setCompetenceMetier(List<CompetenceMetier> competenceMetier) {
+        this.competenceMetier = competenceMetier;
+    }
+
+   
+
   
+    
     
     @Override
     public int hashCode() {
