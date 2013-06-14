@@ -5,9 +5,8 @@
 package cnam.gpec.business;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,14 +41,17 @@ public class Competence implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dateSuppressionCompetenceDt;
     
+   
     @ManyToOne
     @JoinColumn(name = "id_domaine")
     private Domaine domaine;
     
     //@LazyCollection(LazyCollectionOption.TRUE)
     //@BatchSize(size = 10)
-    @OneToMany(mappedBy = "competence")
-    private List<Methode> methodeList = new ArrayList<Methode>();
+    
+   
+    @OneToMany(fetch = FetchType.EAGER,cascade= CascadeType.ALL, mappedBy="competence")
+    private Set<Methode> methode ;
     
 //    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "competence")
 //    @JoinColumn(name = "id_savoir")
@@ -63,21 +65,18 @@ public class Competence implements Serializable {
         this.domaine = domaine;
     }
 
-    public List<Methode> getMethodeList() {
-        return methodeList;
+    public Set<Methode> getMethode() {
+        return methode;
     }
 
-    public void setMethodeList(List<Methode> methodeList) {
-        this.methodeList = methodeList;
+    public void setMethode(Set<Methode> methode) {
+        this.methode = methode;
     }
 
-//    public List<Savoir> getSavoirList() {
-//        return savoirList;
-//    }
-//
-//    public void setSavoirList(List<Savoir> savoirList) {
-//        this.savoirList = savoirList;
-//    }
+   
+
+
+  
     
     
     

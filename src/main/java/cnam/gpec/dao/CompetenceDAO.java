@@ -48,7 +48,7 @@ public class CompetenceDAO {
             em.getTransaction().begin();
             // utilisation de l'EntityManager
             
-           Query query = em.createQuery("select c from Competence as c,Methode as m");
+           Query query = em.createQuery("select c from Competence as c");
          //  List<Competence> competencesList = query.getResultList();
            
             System.out.println("tet");

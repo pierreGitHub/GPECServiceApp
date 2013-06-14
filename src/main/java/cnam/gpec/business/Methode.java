@@ -5,17 +5,14 @@
 package cnam.gpec.business;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,7 +33,9 @@ public class Methode implements Serializable {
     @Column(name = "description_methode_lb")
     private String descriptionMethodeLb;
     
-    @ManyToOne
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_competence")
     private Competence competence;
     
     
@@ -56,6 +55,7 @@ public class Methode implements Serializable {
         this.intituleMethodeLb = intituleMethodeLb;
     }
 
+    @XmlTransient
     public Competence getCompetence() {
         return competence;
     }
