@@ -137,6 +137,20 @@ public class GpecService {
 
         return campagneFind;
     }
+    
+    /**
+     * Récupérer une evaluation à partir de son identifiant
+     */
+    @WebMethod(operationName = "getEvaluation")
+    public Evaluation getEvaluation(@WebParam(name = "idEvaluation") String id) {
+        Evaluation evaluationFind = null;
+
+        initEvaluationDao();
+        evaluationFind = evaluationDAO.getEvaluation(new Integer(id));
+        closeEvaluationDao();
+
+        return evaluationFind;
+    }
 
     /**
      * Récupérer la liste des campagnes EN COURS pour un compte d'accès donné

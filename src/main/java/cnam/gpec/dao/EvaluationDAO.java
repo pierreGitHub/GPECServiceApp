@@ -50,9 +50,7 @@ public class EvaluationDAO {
             
            Query query = em.createQuery("select e from Evaluation as e");
          //  List<Competence> competencesList = query.getResultList();
-           
-            System.out.println("tet");
-           //competenceFind = competencesList.get(1);
+         
             evaluationFind = em.find(Evaluation.class,id.intValue());
             em.getTransaction().commit();
             System.out.println("getEvaluation with id=" + evaluationFind.getIdEvaluation());
