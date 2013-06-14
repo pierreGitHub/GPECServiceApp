@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,11 +42,13 @@ public class Personne implements Serializable {
     private String idEpicea;
     @Column(name = "estAdmin")
     private boolean estAdmin;
-    
+   
+   
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_compte_acces")
     private CompteAcces compteAcces;
 
+    @XmlTransient
     public CompteAcces getCompteAcces() {
         return compteAcces;
     }

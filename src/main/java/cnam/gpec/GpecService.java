@@ -151,6 +151,9 @@ public class GpecService {
 
         return evaluationFind;
     }
+    
+    
+    
 
     /**
      * Récupérer la liste des campagnes EN COURS pour un compte d'accès donné
@@ -262,13 +265,28 @@ public class GpecService {
     }
     
     /**
+     * Récupérer une evaluation à partir de son identifiant
+     */
+    @WebMethod(operationName = "getCompteAcces")
+    public CompteAcces getCompteAcces(@WebParam(name = "idCompteAcces") String id) {
+        CompteAcces compteAccesFind = null;
+
+        initCompteAccesDao();
+        compteAccesFind = compteAccesDAO.getCompteAcces(new Integer(id));
+        closeCompteAccesDao();
+
+        return compteAccesFind;
+    }
+    
+    
+    /**
      * 
      */
     @WebMethod(operationName = "isRightsAndAuthentificated")
     public CompteAcces isRightsAndAuthentificated(@WebParam(name = "compteAcces") CompteAcces compteAcces) {
         CompteAcces compteAccesFind = null;
         initCompteAccesDao();
-        compteAccesFind = compteAccesDAO.getCompteAcces(compteAcces);
+        compteAccesFind = compteAccesDAO.isRightsAndAuthentificated(compteAcces);
         closeCompteAccesDao();
 
 

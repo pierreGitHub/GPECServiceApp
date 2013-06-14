@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
-  <persistence-unit name="gpec" transaction-type="JTA">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <jta-data-source>jdbc/gpec</jta-data-source>
-    <properties>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-    </properties>
-    <property name="eclipselink.logging.level" value="FINE"/>
-    <property name="eclipselink.logging.parameters" value="true"/>
-    <property name="eclipselink.jdbc.user" value="toto"/>
-    <property name="eclipselink.jdbc.password" value="password"/>
-    <class>cnam.gpec.business.Competence</class>
- <class>cnam.gpec.business.Domaine</class>
-     <class>cnam.gpec.business.Methode</class>
-     <class>cnam.gpec.business.Savoir</class>
-      <class>cnam.gpec.business.Metier</class>
-      <class>cnam.gpec.business.CompetenceMetier</class>
-       <class>cnam.gpec.business.Campagne</class>
+    <persistence-unit name="gpec" transaction-type="JTA">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>jdbc/gpec</jta-data-source>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+        </properties>
+        <property name="eclipselink.logging.level" value="FINE"/>
+        <property name="eclipselink.logging.parameters" value="true"/>
+        <property name="eclipselink.jdbc.user" value="toto"/>
+        <property name="eclipselink.jdbc.password" value="password"/>
+        <class>cnam.gpec.business.Competence</class>
+        <class>cnam.gpec.business.Domaine</class>
+        <class>cnam.gpec.business.Methode</class>
+        <class>cnam.gpec.business.Savoir</class>
+        <class>cnam.gpec.business.Metier</class>
+        <class>cnam.gpec.business.CompetenceMetier</class>
+        <class>cnam.gpec.business.Campagne</class>
         <class>cnam.gpec.business.Evaluation</class>
-         <class>cnam.gpec.business.Personne</class>
-         <class>cnam.gpec.business.auth.CompteAcces</class>
-         <class>cnam.gpec.business.Centre</class>
-         <class>cnam.gpec.business.Region</class>
-         <class>cnam.gpec.business.auth.Role</class>
-  </persistence-unit>
+        <class>cnam.gpec.business.Personne</class>
+        <class>cnam.gpec.business.auth.CompteAcces</class>
+        <class>cnam.gpec.business.Centre</class>
+        <class>cnam.gpec.business.Region</class>
+        <class>cnam.gpec.business.auth.Role</class>
+    </persistence-unit>
 </persistence>

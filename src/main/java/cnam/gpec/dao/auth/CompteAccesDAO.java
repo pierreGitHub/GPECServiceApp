@@ -36,10 +36,10 @@ public class CompteAccesDAO {
      * Récupère un objet Savoir à partir de son identifiant
      *
      *
-     * @param id
+     * @param idCompteAcces
      * @return savoirFind
      */
-    public CompteAcces getCompteAcces(CompteAcces compteAcces) {
+    public CompteAcces getCompteAcces(Integer id) {
 
         CompteAcces compteAccesFind = null;
         EntityManager em = null;
@@ -48,7 +48,43 @@ public class CompteAccesDAO {
             em.getTransaction().begin();
             // utilisation de l'EntityManager
             
-           Query query = em.createQuery("select c from CompteAcces as m");
+           Query query = em.createQuery("select c from CompteAcces as c");
+         //  List<Competence> competencesList = query.getResultList();
+           
+            System.out.println("tet");
+           //competenceFind = competencesList.get(1);
+            compteAccesFind = em.find(CompteAcces.class,id.intValue());
+            em.getTransaction().commit();
+            System.out.println("getCompteAcces with id=" + compteAccesFind.getIdCompteAcces());
+            
+            
+            return (compteAccesFind);
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    /**
+     *
+     * Récupère un objet Compte Acces à partir de son identifiant
+     *
+     *
+     * @param id
+     * @return savoirFind
+     */
+    public CompteAcces isRightsAndAuthentificated(CompteAcces compteAcces) {
+
+        CompteAcces compteAccesFind = null;
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            
+           Query query = em.createQuery("select c from CompteAcces as c");
          //  List<Competence> competencesList = query.getResultList();
            
             System.out.println("tet");
