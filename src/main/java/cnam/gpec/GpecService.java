@@ -131,9 +131,9 @@ public class GpecService {
     public Campagne getCampagne(@WebParam(name = "idCampagne") String id) {
         Campagne campagneFind = null;
 
-        initCompetenceDao();
+        initCampagneDao();
         campagneFind = campagneDAO.getCampagne(new Integer(id));
-        closeCompetenceDao();
+        closeCampagneDao();
 
         return campagneFind;
     }
@@ -312,5 +312,15 @@ public class GpecService {
 
     private void closeEvaluationDao() {
         evaluationDAO.close();
+    }
+    
+    
+       private void initCampagneDao() {
+        campagneDAO = new CampagneDAO();
+        campagneDAO.init();
+    }
+
+    private void closeCampagneDao() {
+        campagneDAO.close();
     }
 }

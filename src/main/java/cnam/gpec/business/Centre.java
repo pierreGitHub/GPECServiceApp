@@ -34,8 +34,8 @@ public class Centre implements Serializable {
     @Column(name = "intitule_court_lb")
     private String intituleCourtLb;
     
-    @ManyToOne
-    @Column(name = "id_centre")
+    @ManyToOne()
+    @JoinColumn(name = "id_centre",insertable = false,updatable = false)
     private Centre centrePere;
     
     @ManyToOne
