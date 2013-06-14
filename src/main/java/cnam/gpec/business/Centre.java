@@ -6,14 +6,20 @@ package cnam.gpec.business;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,7 +47,13 @@ public class Centre implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_region")
     private Region region;
+    
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "centre")
+    @JoinColumns({@JoinColumn(name="id_campagne"),@JoinColumn(name="id_centre")})
+    private List<CampagneCentre> campagneCentre ;
 
+    
+    @XmlTransient
     public Centre getCentrePere() {
         return centrePere;
     }
@@ -70,7 +82,16 @@ public class Centre implements Serializable {
         this.idCentre = idCentre;
     }
 
-   
+    @XmlTransient   
+    public List<CampagneCentre> getCampagneCentre() {
+        return campagneCentre;
+    }
+
+    public void setCampagneCentre(List<CampagneCentre> campagneCentre) {
+        this.campagneCentre = campagneCentre;
+    }
+    
+      
 
     public String getIntituleLongLb() {
         return intituleLongLb;
@@ -89,6 +110,8 @@ public class Centre implements Serializable {
     }
 
    
+    
+    
     
     @Override
     public int hashCode() {

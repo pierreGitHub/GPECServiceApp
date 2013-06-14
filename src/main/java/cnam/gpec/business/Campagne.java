@@ -6,14 +6,19 @@ package cnam.gpec.business;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -45,6 +50,10 @@ public class Campagne implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_personne")
     private Personne estReferent;
+    
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumns({@JoinColumn(name="id_campagne"),@JoinColumn(name="id_centre")})
+    private List<CampagneCentre> campagneCentre ;
 
     public Personne getEstReferent() {
         return estReferent;
@@ -103,6 +112,17 @@ public class Campagne implements Serializable {
     public void setVerrouillerCampagne(boolean verrouillerCampagne) {
         this.verrouillerCampagne = verrouillerCampagne;
     }
+
+    public List<CampagneCentre> getCampagneCentre() {
+        return campagneCentre;
+    }
+
+    public void setCampagneCentre(List<CampagneCentre> campagneCentre) {
+        this.campagneCentre = campagneCentre;
+    }
+
+    
+    
     
    
 

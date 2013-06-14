@@ -17,6 +17,7 @@
         <class>cnam.gpec.business.Metier</class>
         <class>cnam.gpec.business.CompetenceMetier</class>
         <class>cnam.gpec.business.Campagne</class>
+        <class>cnam.gpec.business.CampagneCentre</class>
         <class>cnam.gpec.business.Evaluation</class>
         <class>cnam.gpec.business.Personne</class>
         <class>cnam.gpec.business.auth.CompteAcces</class>

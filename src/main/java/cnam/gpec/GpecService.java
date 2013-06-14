@@ -66,7 +66,7 @@ public class GpecService {
             return "Compétence non trouvée";
         }
     }
-    
+
     /**
      * Récupérer un métier à partir de son identifiant
      */
@@ -80,8 +80,8 @@ public class GpecService {
         return metierFind;
 
     }
-    
-     /**
+
+    /**
      * Récupérer un méthode à partir de son identifiant
      */
     @WebMethod(operationName = "getMethode")
@@ -94,8 +94,8 @@ public class GpecService {
         return methodeFind;
 
     }
-    
-     /**
+
+    /**
      * Récupérer un savoir à partir de son identifiant
      */
     @WebMethod(operationName = "getSavoir")
@@ -108,7 +108,6 @@ public class GpecService {
         return savoirFind;
 
     }
-    
 
     /**
      * Récupérer une compétence à partir de son identifiant
@@ -137,7 +136,7 @@ public class GpecService {
 
         return campagneFind;
     }
-    
+
     /**
      * Récupérer une evaluation à partir de son identifiant
      */
@@ -151,9 +150,6 @@ public class GpecService {
 
         return evaluationFind;
     }
-    
-    
-    
 
     /**
      * Récupérer la liste des campagnes EN COURS pour un compte d'accès donné
@@ -161,21 +157,29 @@ public class GpecService {
     @WebMethod(operationName = "getCampagneListENCOURS")
     public List<Campagne> getCampagneListENCOURS(@WebParam(name = "idCompteAcces") String id) {
         List<Campagne> campagneList = null;
-        initCampagneDao();
-        campagneList = campagneDAO.getCampagneListENCOURS(new Integer(id));
-        closeCampagneDao();
+
+        // Regarde le profil
+        // Si FORMATEUR
+        if (getCompteAcces(id).getRole().getIdRole().equals(4)) {
+            initCampagneDao();
+            campagneList = campagneDAO.getCampagneListENCOURSProfilReferent(new Integer(id));
+            closeCampagneDao();
+        } else {
+            initCampagneDao();
+            campagneList = campagneDAO.getCampagneListENCOURSProfilAutre(new Integer(id));
+            closeCampagneDao();
+        
+        }
 
         return campagneList;
     }
-    
-    
 
     /**
      * Récupérer la liste des campagnes TERMINEE pour un compte d'accès donné
      */
     @WebMethod(operationName = "getCampagneListTERMINEE")
     public List<Campagne> getCampagneListTERMINEE(@WebParam(name = "idCompteAcces") String id) {
-         List<Campagne> campagneList = null;
+        List<Campagne> campagneList = null;
         initCampagneDao();
         campagneList = campagneDAO.getCampagneListTERMINEE(new Integer(id));
         closeCampagneDao();
@@ -210,8 +214,8 @@ public class GpecService {
 
         return messageCreate;
     }
-    
-     /**
+
+    /**
      * Créer/modifier un évaluation
      */
     @WebMethod(operationName = "persistEvaluation")
@@ -224,8 +228,7 @@ public class GpecService {
 
         return messageCreate;
     }
-    
-    
+
     /**
      * Créer/modifier une competence
      */
@@ -239,9 +242,10 @@ public class GpecService {
 
         return messageCreate;
     }
-    
+
     /**
-     * Récupérer la liste des autoévalations EN COURS pour un compte d'accès donné
+     * Récupérer la liste des autoévalations EN COURS pour un compte d'accès
+     * donné
      */
     @WebMethod(operationName = "getEvaluationListENCOURS")
     public List<Evaluation> getEvaluationListENCOURS(@WebParam(name = "idCompteAcces") String id) {
@@ -252,9 +256,10 @@ public class GpecService {
 
         return evaluationList;
     }
-    
+
     /**
-     * Récupérer la liste des autoévalations TERMINES pour un compte d'accès donné
+     * Récupérer la liste des autoévalations TERMINES pour un compte d'accès
+     * donné
      */
     @WebMethod(operationName = "getEvaluationListTERMINEE")
     public List<Evaluation> getEvaluationListTERMINEE(@WebParam(name = "idCompteAcces") String id) {
@@ -265,7 +270,7 @@ public class GpecService {
 
         return evaluationList;
     }
-    
+
     /**
      * Récupérer une evaluation à partir de son identifiant
      */
@@ -279,10 +284,9 @@ public class GpecService {
 
         return compteAccesFind;
     }
-    
-    
+
     /**
-     * 
+     *
      */
     @WebMethod(operationName = "isRightsAndAuthentificated")
     public CompteAcces isRightsAndAuthentificated(@WebParam(name = "compteAcces") CompteAcces compteAcces) {
@@ -303,7 +307,7 @@ public class GpecService {
     private void closeCompetenceDao() {
         competenceDAO.close();
     }
-    
+
     private void initMetierDao() {
         metierDAO = new MetierDAO();
         metierDAO.init();
@@ -312,7 +316,7 @@ public class GpecService {
     private void closeMetierDao() {
         metierDAO.close();
     }
-    
+
     private void initMethodeDao() {
         methodeDAO = new MethodeDAO();
         methodeDAO.init();
@@ -321,7 +325,7 @@ public class GpecService {
     private void closeMethodeDao() {
         methodeDAO.close();
     }
-    
+
     private void initSavoirDao() {
         savoirDAO = new SavoirDAO();
         savoirDAO.init();
@@ -330,7 +334,8 @@ public class GpecService {
     private void closeSavoirDao() {
         savoirDAO.close();
     }
-        private void initCompteAccesDao() {
+
+    private void initCompteAccesDao() {
         compteAccesDAO = new CompteAccesDAO();
         compteAccesDAO.init();
     }
@@ -338,8 +343,8 @@ public class GpecService {
     private void closeCompteAccesDao() {
         compteAccesDAO.close();
     }
-    
-        private void initEvaluationDao() {
+
+    private void initEvaluationDao() {
         evaluationDAO = new EvaluationDAO();
         evaluationDAO.init();
     }
@@ -347,9 +352,8 @@ public class GpecService {
     private void closeEvaluationDao() {
         evaluationDAO.close();
     }
-    
-    
-       private void initCampagneDao() {
+
+    private void initCampagneDao() {
         campagneDAO = new CampagneDAO();
         campagneDAO.init();
     }

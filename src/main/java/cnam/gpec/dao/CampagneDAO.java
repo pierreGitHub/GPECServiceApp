@@ -70,13 +70,13 @@ public class CampagneDAO {
 
     /**
      *
-     * Récupère la liste des campagnes en COURS à id du compte d'accès
+     * Récupère la liste des campagnes en COURS pour un référent
      *
      *
      * @param id
      * @return campagneFind
      */
-    public List<Campagne> getCampagneListENCOURS(Integer id) {
+    public List<Campagne> getCampagneListENCOURSProfilReferent(Integer id) {
         List<Campagne> campagneListFind = null;
         
         EntityManager em = null;
@@ -99,12 +99,41 @@ public class CampagneDAO {
         }
         
         
+    }
+    
+    /**
+     *
+     * Récupère la liste des campagnes en COURS pour un référent
+     *
+     *
+     * @param id
+     * @return campagneFind
+     */
+    public List<Campagne> getCampagneListENCOURSProfilAutre(Integer id) {
+        List<Campagne> campagneListFind = null;
         
-        
-        
-        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            
+           Query query = em.createQuery("select c from Campagne as c where c.estReferent.idPersonne = :id and c.verrouillerCampagne=FALSE").setParameter("id", id);
+           campagneListFind = query.getResultList();
+          
+            em.getTransaction().commit();
+          
+            return campagneListFind;
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+                     
         
     }
+    
     
      /**
      *

@@ -8,10 +8,13 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,12 +28,17 @@ public class CampagneCentre implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "id_centre")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_centre")
     private Centre centre;
+    
     @Id
-    @Column(name = "id_campagne")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_campagne")
     private Campagne campagne;
 
+    
+    
     public Centre getCentre() {
         return centre;
     }
@@ -39,6 +47,7 @@ public class CampagneCentre implements Serializable {
         this.centre = centre;
     }
 
+    @XmlTransient
     public Campagne getCampagne() {
         return campagne;
     }
