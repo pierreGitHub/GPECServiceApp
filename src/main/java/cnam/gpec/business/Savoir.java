@@ -8,10 +8,14 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -31,6 +35,10 @@ public class Savoir implements Serializable {
     private String intituleSavoirLb;
     @Column(name = "description_savoir_lb")
     private String descriptionSavoirLb;
+    
+        @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_competence")
+    private Competence competence;
 
     public Integer getIdSavoir() {
         return idSavoir;
@@ -55,6 +63,17 @@ public class Savoir implements Serializable {
     public void setDescriptionSavoirLb(String descriptionSavoirLb) {
         this.descriptionSavoirLb = descriptionSavoirLb;
     }
+
+    @XmlTransient
+    public Competence getCompetence() {
+        return competence;
+    }
+
+    public void setCompetence(Competence competence) {
+        this.competence = competence;
+    }
+    
+    
 
    
     

@@ -6,6 +6,7 @@ package cnam.gpec.business;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,16 +47,12 @@ public class Competence implements Serializable {
     @JoinColumn(name = "id_domaine")
     private Domaine domaine;
     
-    //@LazyCollection(LazyCollectionOption.TRUE)
-    //@BatchSize(size = 10)
-    
-   
+
     @OneToMany(fetch = FetchType.EAGER,cascade= CascadeType.ALL, mappedBy="competence")
-    private Set<Methode> methode ;
+    private List<Methode> methode ;
     
-//    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "competence")
-//    @JoinColumn(name = "id_savoir")
-//    private List<Savoir> savoirList = new ArrayList<Savoir>();
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "competence")
+    private List<Savoir> savoir ;
     
     public Domaine getDomaine() {
        return domaine;
@@ -65,20 +62,28 @@ public class Competence implements Serializable {
         this.domaine = domaine;
     }
 
-    public Set<Methode> getMethode() {
+    public List<Methode> getMethode() {
         return methode;
     }
 
-    public void setMethode(Set<Methode> methode) {
+    public void setMethode(List<Methode> methode) {
         this.methode = methode;
     }
 
    
+    
+    
+    public List<Savoir> getSavoir() {
+        return savoir;
+    }
 
+    public void setSavoir(List<Savoir> savoir) {
+        this.savoir = savoir;
+    }
 
   
-    
-    
+
+
     
 
     public Integer getIdCompetence() {
