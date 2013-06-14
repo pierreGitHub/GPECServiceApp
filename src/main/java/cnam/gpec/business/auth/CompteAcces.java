@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,7 +24,7 @@ import javax.persistence.TemporalType;
  *
  * @author pierre chanussot
  */
-@Entity(name = "compteAcces")
+@Entity(name = "CompteAcces")
 @Table(name = "COMPTE_ACCES")
 public class CompteAcces implements Serializable {
 
@@ -45,6 +47,10 @@ public class CompteAcces implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_role")
     private Role role;
+    
+    @OneToOne
+    @JoinColumn(name = "id_compte_acces",insertable = false,updatable = false)
+    private Personne personne;
 
     public Role getRole() {
         return role;
@@ -60,6 +66,14 @@ public class CompteAcces implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Personne getPersonne() {
+        return personne;
+    }
+
+    public void setPersonne(Personne personne) {
+        this.personne = personne;
     }
     
     
