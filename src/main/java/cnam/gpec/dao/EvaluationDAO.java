@@ -4,8 +4,10 @@
  */
 package cnam.gpec.dao;
 
+import cnam.gpec.business.Campagne;
 import cnam.gpec.business.Competence;
 import cnam.gpec.business.Evaluation;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -64,4 +66,81 @@ public class EvaluationDAO {
             }
         }
     }
+    
+    /**
+     *
+     * Récupère la liste des evalautions en COURS à id du compte d'accès
+     *
+     *
+     * @param id
+     * @return evaluationFind
+     */
+    public List<Evaluation> getEvaluationListENCOURS(Integer id) {
+        List<Evaluation> evaluationListFind = null;
+        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            
+           Query query = em.createQuery("select e from Evaluation as e where e.personne.idPersonne = :id and e.dateValidationDt is null").setParameter("id", id);
+           evaluationListFind = query.getResultList();
+          
+            em.getTransaction().commit();
+          
+            return evaluationListFind;
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    /**
+     *
+     * Récupère la liste des evalautions TERMINEE à id du compte d'accès
+     *
+     *
+     * @param id
+     * @return evaluationFind
+     */
+    public List<Evaluation> getEvaluationListTERMINEE(Integer id) {
+        List<Evaluation> evaluationListFind = null;
+        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            
+           Query query = em.createQuery("select e from Evaluation as e where e.personne.idPersonne = :id and e.dateValidationDt is not null").setParameter("id", id);
+           evaluationListFind = query.getResultList();
+          
+            em.getTransaction().commit();
+          
+            return evaluationListFind;
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+    }
+
 }

@@ -246,9 +246,9 @@ public class GpecService {
     @WebMethod(operationName = "getEvaluationListENCOURS")
     public List<Evaluation> getEvaluationListENCOURS(@WebParam(name = "idCompteAcces") String id) {
         List<Evaluation> evaluationList = null;
-        initCompetenceDao();
-        //TODO Partie dao
-        closeCompetenceDao();
+        initEvaluationDao();
+        evaluationList = evaluationDAO.getEvaluationListENCOURS(new Integer(id));
+        closeEvaluationDao();
 
         return evaluationList;
     }
@@ -259,9 +259,9 @@ public class GpecService {
     @WebMethod(operationName = "getEvaluationListTERMINEE")
     public List<Evaluation> getEvaluationListTERMINEE(@WebParam(name = "idCompteAcces") String id) {
         List<Evaluation> evaluationList = null;
-        initCompetenceDao();
-        //TODO Partie dao
-        closeCompetenceDao();
+        initEvaluationDao();
+        evaluationList = evaluationDAO.getEvaluationListTERMINEE(new Integer(id));
+        closeEvaluationDao();
 
         return evaluationList;
     }

@@ -5,6 +5,7 @@
 package cnam.gpec.dao;
 
 import cnam.gpec.business.Campagne;
+import cnam.gpec.business.Evaluation;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -142,4 +143,5 @@ public class CampagneDAO {
         
         
     }
+
 }
