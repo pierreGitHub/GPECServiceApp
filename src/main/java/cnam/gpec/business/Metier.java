@@ -32,7 +32,7 @@ public class Metier implements Serializable {
     private Integer idMetier;
     @Column(name = "intitule_metier_lb")
     private String intituleMetierLb;
-    @Column(name = "decription_metier_lb")
+    @Column(name = "description_metier_lb")
     private String descriptionMetierLb;
     @Column(name = "verrouiller_metier")
     private boolean verrouillerMetier;

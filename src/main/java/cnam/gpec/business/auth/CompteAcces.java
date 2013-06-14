@@ -39,6 +39,8 @@ public class CompteAcces implements Serializable {
     @Column(name = "date_expiration_dt")
     @Temporal(TemporalType.DATE)
     private Date dateExpirationDt;
+    @Column(name = "password")
+    private String password;
     
     @ManyToOne
     @JoinColumn(name = "id_role")
@@ -50,6 +52,14 @@ public class CompteAcces implements Serializable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
     
