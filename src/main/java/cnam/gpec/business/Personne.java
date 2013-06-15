@@ -6,16 +6,16 @@ package cnam.gpec.business;
 
 import cnam.gpec.business.auth.CompteAcces;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -24,12 +24,14 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author pierre chanussot
  */
-@Entity(name = "personne")
+@Entity(name = "Personne")
 @Table(name = "PERSONNE")
 public class Personne implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator = "personne_id_personne_seq")
+    @SequenceGenerator(name = "personne_id_personne_seq",sequenceName = "personne_id_personne_seq",allocationSize=1) 
     @Column(name = "id_personne")
     private Integer idPersonne;
     @Column(name = "nom_lb")
@@ -38,8 +40,7 @@ public class Personne implements Serializable {
     private String nomNaissanceLb;
     @Column(name = "prenom_lb")
     private String prenomLb;
-    @Column(name = "id_epicea")
-    private String idEpicea;
+    
     @Column(name = "estAdmin")
     private boolean estAdmin;
    
@@ -47,6 +48,10 @@ public class Personne implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_compte_acces")
     private CompteAcces compteAcces;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_centre")
+    private Centre affectationCentre;
 
     @XmlTransient
     public CompteAcces getCompteAcces() {
@@ -57,7 +62,17 @@ public class Personne implements Serializable {
         this.compteAcces = compteAcces;
     }
 
+    public Centre getAffectationCentre() {
+        return affectationCentre;
+    }
+
+    public void setAffectationCentre(Centre affectationCentre) {
+        this.affectationCentre = affectationCentre;
+    }
+
+  
     
+       
     
     public Integer getIdPersonne() {
         return idPersonne;
@@ -91,14 +106,7 @@ public class Personne implements Serializable {
         this.prenomLb = prenomLb;
     }
 
-    public String getIdEpicea() {
-        return idEpicea;
-    }
-
-    public void setIdEpicea(String idEpicea) {
-        this.idEpicea = idEpicea;
-    }
-
+  
     public boolean isEstAdmin() {
         return estAdmin;
     }

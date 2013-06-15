@@ -4,6 +4,7 @@
  */
 package cnam.gpec.dao;
 
+import cnam.gpec.business.Campagne;
 import cnam.gpec.business.Metier;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -58,6 +59,46 @@ public class MetierDAO {
             
             
             return (metierFind);
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void persist(Metier metier) {
+        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            //em.merge(metier);
+            em.persist(metier);
+            em.getTransaction().commit();
+            System.out.println("getMetier with id=" + metier.getIdMetier());
+            
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    public void merge(Metier metier) {
+        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            em.merge(metier);
+            //em.persist(metier);
+            em.getTransaction().commit();
+            System.out.println("getMetier with id=" + metier.getIdMetier());
+            
         }
         finally {
             if (em != null) {

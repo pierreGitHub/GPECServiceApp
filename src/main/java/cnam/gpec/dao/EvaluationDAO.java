@@ -5,7 +5,6 @@
 package cnam.gpec.dao;
 
 import cnam.gpec.business.Campagne;
-import cnam.gpec.business.Competence;
 import cnam.gpec.business.Evaluation;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -141,6 +140,42 @@ public class EvaluationDAO {
         
         
         
+    }
+    
+     public void persist(Evaluation evaluation) {
+        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(evaluation);
+            em.getTransaction().commit();
+            
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    public void merge(Evaluation evaluation) {
+        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            em.merge(evaluation);
+            em.getTransaction().commit();
+           
+            
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
 }

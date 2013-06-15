@@ -6,6 +6,7 @@ package cnam.gpec.dao;
 
 import cnam.gpec.business.Campagne;
 import cnam.gpec.business.Evaluation;
+import cnam.gpec.business.Metier;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -143,7 +144,7 @@ public class CampagneDAO {
      * @param id
      * @return campagneFind
      */
-    public List<Campagne> getCampagneListTERMINEE(Integer id) {
+    public List<Campagne> getCampagneListTERMINEEProfilReferent(Integer id) {
         List<Campagne> campagneListFind = null;
         
         EntityManager em = null;
@@ -166,11 +167,75 @@ public class CampagneDAO {
         }
         
         
+    }
+    
+    /**
+     *
+     * Récupère la liste des campagnes en COURS pour un référent
+     *
+     *
+     * @param id
+     * @return campagneFind
+     */
+    public List<Campagne> getCampagneListTERMINEEProfilAutre(Integer idCentre) {
+        List<Campagne> campagneListFind = null;
         
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            
+           Query query = em.createQuery("select c from Campagne as c where c.campagneCentre.centre.idCentre = :id and c.verrouillerCampagne=TRUE").setParameter("id", idCentre);
+           campagneListFind = query.getResultList();
+          
+            em.getTransaction().commit();
+          
+            return campagneListFind;
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+                     
         
+    }
+    
+    public void persist(Campagne campagne) {
         
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(campagne);
+            em.getTransaction().commit();
+            
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    public void merge(Campagne campagne) {
         
-        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            em.merge(campagne);
+            em.getTransaction().commit();
+           
+            
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
 }

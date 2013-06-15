@@ -9,6 +9,7 @@ import cnam.gpec.business.Competence;
 import cnam.gpec.business.Evaluation;
 import cnam.gpec.business.Methode;
 import cnam.gpec.business.Metier;
+import cnam.gpec.business.Personne;
 import cnam.gpec.business.Savoir;
 import cnam.gpec.business.auth.CompteAcces;
 import cnam.gpec.dao.CampagneDAO;
@@ -16,6 +17,7 @@ import cnam.gpec.dao.CompetenceDAO;
 import cnam.gpec.dao.EvaluationDAO;
 import cnam.gpec.dao.MethodeDAO;
 import cnam.gpec.dao.MetierDAO;
+import cnam.gpec.dao.PersonneDAO;
 import cnam.gpec.dao.SavoirDAO;
 import cnam.gpec.dao.auth.CompteAccesDAO;
 import java.util.List;
@@ -41,6 +43,7 @@ public class GpecService {
     private CampagneDAO campagneDAO;
     private CompteAccesDAO compteAccesDAO;
     private EvaluationDAO evaluationDAO;
+    private PersonneDAO personneDAO;
 
     /**
      * This is a sample web service operation
@@ -122,6 +125,21 @@ public class GpecService {
         return competenceFind;
 
     }
+    
+    
+    /**
+     * Récupérer une personne à partir de son identifiant
+     */
+    @WebMethod(operationName = "getPersonne")
+    public Personne getPersonne(@WebParam(name = "idPersonne") String id) {
+        Personne personneFind = null;
+        initPersonneDao();
+        personneFind = personneDAO.getPersonne(new Integer(id));
+        closePersonneDao();
+
+        return personneFind;
+
+    }
 
     /**
      * Récupérer une campagne à partir de son identifiant
@@ -168,7 +186,7 @@ public class GpecService {
             initCampagneDao();
             campagneList = campagneDAO.getCampagneListENCOURSProfilAutre(new Integer(id));
             closeCampagneDao();
-        
+
         }
 
         return campagneList;
@@ -180,9 +198,21 @@ public class GpecService {
     @WebMethod(operationName = "getCampagneListTERMINEE")
     public List<Campagne> getCampagneListTERMINEE(@WebParam(name = "idCompteAcces") String id) {
         List<Campagne> campagneList = null;
-        initCampagneDao();
-        campagneList = campagneDAO.getCampagneListTERMINEE(new Integer(id));
-        closeCampagneDao();
+
+        // Regarde le profil
+        // Si FORMATEUR
+        if (getCompteAcces(id).getRole().getIdRole().equals(4)) {
+            initCampagneDao();
+            campagneList = campagneDAO.getCampagneListTERMINEEProfilReferent(new Integer(id));
+            closeCampagneDao();
+        } else {
+            initCampagneDao();
+            campagneList = campagneDAO.getCampagneListTERMINEEProfilAutre(getCompteAcces(id).getPersonne().getAffectationCentre().getIdCentre());
+            closeCampagneDao();
+
+        }
+
+
 
         return campagneList;
     }
@@ -193,10 +223,22 @@ public class GpecService {
     @WebMethod(operationName = "persistCampagne")
     public String persistCampagne(@WebParam(name = "campagne") Campagne campagne) {
         String messageCreate = null;
-        initCompetenceDao();
-        //TODO Partie dao
-        closeCompetenceDao();
+        String action = null;
+        //TEST 
+        campagne = new Campagne();
+        campagne.setIntituleCampagneLb("Campagne TEST");
 
+
+        initCampagneDao();
+        if (campagne.getIdCampagne()== null) {
+            action = "créée.";
+            campagneDAO.persist(campagne);
+        } else {
+            action = "modifiée.";
+            campagneDAO.merge(campagne);
+        }
+         closeCampagneDao();
+        messageCreate = "La campagne : " + campagne.getIntituleCampagneLb()+ " a été " + action;
 
         return messageCreate;
     }
@@ -207,10 +249,26 @@ public class GpecService {
     @WebMethod(operationName = "persistMetier")
     public String persistMetier(@WebParam(name = "metier") Metier metier) {
         String messageCreate = null;
-        initCompetenceDao();
-        //TODO Partie dao
-        closeCompetenceDao();
+        String action = null;
 
+        //TEST 
+        metier = new Metier();
+        //metier.setIdMetier(6);
+        metier.setIntituleMetierLb("Chef de projet");
+
+
+        initMetierDao();
+        if (metier.getIdMetier() == null) {
+            action = "créé.";
+            metierDAO.persist(metier);
+        } else {
+            action = "modifié.";
+            metierDAO.merge(metier);
+        }
+
+
+        closeMetierDao();
+        messageCreate = "Le métier : " + metier.getIntituleMetierLb() + " a été " + action;
 
         return messageCreate;
     }
@@ -221,10 +279,20 @@ public class GpecService {
     @WebMethod(operationName = "persistEvaluation")
     public String persistEvaluation(@WebParam(name = "evaluation") Evaluation evaluation) {
         String messageCreate = null;
-        initEvaluationDao();
-        //TODO Partie dao
-        closeEvaluationDao();
+        String action = null;
+       
 
+
+        initCampagneDao();
+        if (evaluation.getIdEvaluation()== null) {
+            action = "créée.";
+            evaluationDAO.persist(evaluation);
+        } else {
+            action = "modifiée.";
+            evaluationDAO.merge(evaluation);
+        }
+         closeCampagneDao();
+        messageCreate = "L'évaluation a été " + action;
 
         return messageCreate;
     }
@@ -235,10 +303,20 @@ public class GpecService {
     @WebMethod(operationName = "persistCompetence")
     public String persistCompetence(@WebParam(name = "competence") Competence competence) {
         String messageCreate = null;
-        initCompetenceDao();
-        //TODO Partie dao
-        closeCompetenceDao();
+        String action = null;
+       
 
+
+        initCampagneDao();
+        if (competence.getIdCompetence()== null) {
+            action = "créée.";
+            competenceDAO.persist(competence);
+        } else {
+            action = "modifiée.";
+            competenceDAO.merge(competence);
+        }
+         closeCampagneDao();
+        messageCreate = "La compétence a été " + action;
 
         return messageCreate;
     }
@@ -297,6 +375,60 @@ public class GpecService {
 
 
         return compteAccesFind;
+    }
+    
+    
+     /**
+     * Créer/modifier un compte d'accès
+     */
+    @WebMethod(operationName = "persistCompteAcces")
+    public String persistCompteAcces(@WebParam(name = "compteAcces") CompteAcces compteAcces) {
+        String messageCreate = null;
+        String action = null;
+
+        
+
+        initCompteAccesDao();
+        if (compteAcces.getIdCompteAcces()== null) {
+            action = "créé.";
+            compteAccesDAO.persist(compteAcces);
+        } else {
+            action = "modifié.";
+            compteAccesDAO.merge(compteAcces);
+        }
+
+
+        closeCompteAccesDao();
+        messageCreate = "Le compte d'accès : " + compteAcces.getIdCompteAcces()+ " a été " + action;
+
+        return messageCreate;
+    }
+    
+      /**
+     * Créer/modifier une personne
+     */
+    @WebMethod(operationName = "persistPersonne")
+    public String persistPersonne(@WebParam(name = "personne") Personne personne) {
+        String messageCreate = null;
+        String action = null;
+
+        
+        
+        
+        initPersonneDao();
+        if (personne.getIdPersonne()== null) {
+            action = "créé.";
+            personneDAO.persist(personne);
+        } else {
+            action = "modifié.";
+            personneDAO.merge(personne);
+        }
+
+
+        closePersonneDao();
+        messageCreate = "La personne : " + personne.getNomLb()+ " "+ personne.getPrenomLb()+ " a été " + action;
+
+        return messageCreate;
     }
 
     private void initCompetenceDao() {
@@ -360,5 +492,14 @@ public class GpecService {
 
     private void closeCampagneDao() {
         campagneDAO.close();
+    }
+    
+     private void initPersonneDao() {
+        personneDAO = new PersonneDAO();
+        personneDAO.init();
+    }
+
+    private void closePersonneDao() {
+        personneDAO.close();
     }
 }

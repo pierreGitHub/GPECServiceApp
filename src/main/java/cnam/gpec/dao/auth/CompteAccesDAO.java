@@ -4,6 +4,7 @@
  */
 package cnam.gpec.dao.auth;
 
+import cnam.gpec.business.Campagne;
 import cnam.gpec.business.Savoir;
 import cnam.gpec.business.auth.CompteAcces;
 import javax.persistence.EntityManager;
@@ -95,6 +96,42 @@ public class CompteAccesDAO {
             
             
             return (compteAccesFind);
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+     public void persist(CompteAcces compteAcces) {
+        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(compteAcces);
+            em.getTransaction().commit();
+            
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    public void merge(CompteAcces compteAcces) {
+        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            em.merge(compteAcces);
+            em.getTransaction().commit();
+           
+            
         }
         finally {
             if (em != null) {

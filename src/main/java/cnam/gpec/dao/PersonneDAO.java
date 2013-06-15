@@ -4,7 +4,7 @@
  */
 package cnam.gpec.dao;
 
-import cnam.gpec.business.Competence;
+import cnam.gpec.business.Personne;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -16,7 +16,7 @@ import javax.persistence.Query;
  *
  * @author pierre Chanussot
  */
-public class CompetenceDAO {
+public class PersonneDAO {
 
     private EntityManagerFactory factory = null;
 
@@ -32,69 +32,73 @@ public class CompetenceDAO {
 
     /**
      *
-     * Récupère un objet Compétence à partir de son identifiant
+     * Récupère un objet Personne à partir de son identifiant
      *
      *
      * @param id
-     * @return competenceFind
+     * @return personneFind
      */
-    public Competence getCompetence(Integer id) {
+    public Personne getPersonne(Integer id) {
 
-        Competence competenceFind = null;
+        Personne personneFind = null;
         EntityManager em = null;
         try {
             em = factory.createEntityManager();
             em.getTransaction().begin();
             // utilisation de l'EntityManager
-
-            Query query = em.createQuery("select c from Competence as c");
-            //  List<Competence> competencesList = query.getResultList();
-
-            System.out.println("tet");
-            //competenceFind = competencesList.get(1);
-            competenceFind = em.find(Competence.class, id.intValue());
-
-            //competenceFind.getMethodeList();
+            
+           Query query = em.createQuery("select p from Personne as p");
+         //  List<Competence> competencesList = query.getResultList();
+           
+           //competenceFind = competencesList.get(1);
+            personneFind = em.find(Personne.class,id.intValue());
             em.getTransaction().commit();
-            System.out.println("getCompetence with id=" + competenceFind.getIdCompetence());
-
-
-            return (competenceFind);
-        } finally {
+            System.out.println("getPersonne with id=" + personneFind.getIdPersonne());
+            
+            
+            return (personneFind);
+        }
+        finally {
             if (em != null) {
                 em.close();
             }
         }
     }
 
-    public void persist(Competence competence) {
-
-        EntityManager em = null;
-        try {
-            em = factory.createEntityManager();
-            em.getTransaction().begin();
-            em.persist(competence);
-            em.getTransaction().commit();
-
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-
-    public void merge(Competence competence) {
-
+    public void persist(Personne personne) {
+        
         EntityManager em = null;
         try {
             em = factory.createEntityManager();
             em.getTransaction().begin();
             // utilisation de l'EntityManager
-            em.merge(competence);
+            //em.merge(metier);
+            em.persist(personne);
             em.getTransaction().commit();
-
-
-        } finally {
+            System.out.println("getPersonne with id=" + personne.getIdPersonne());
+            
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    public void merge(Personne personne) {
+        
+        EntityManager em = null;
+        try {
+            em = factory.createEntityManager();
+            em.getTransaction().begin();
+            // utilisation de l'EntityManager
+            em.merge(personne);
+            //em.persist(metier);
+            em.getTransaction().commit();
+            System.out.println("getPersonne with id=" + personne.getIdPersonne());
+            
+        }
+        finally {
             if (em != null) {
                 em.close();
             }

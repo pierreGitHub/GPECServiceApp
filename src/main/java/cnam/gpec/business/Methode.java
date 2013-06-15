@@ -8,9 +8,12 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -26,6 +29,8 @@ public class Methode implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator = "methode_id_methode_seq")
+    @SequenceGenerator(name = "methode_id_methode_seq",sequenceName = "methode_id_methode_seq",allocationSize=1) 
     @Column(name = "id_methode")
     private Integer idMethode;
     @Column(name = "intitule_methode_lb")
