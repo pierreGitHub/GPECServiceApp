@@ -6,7 +6,7 @@ package cnam.gpec.dao;
 
 import cnam.gpec.business.Campagne;
 import cnam.gpec.business.Evaluation;
-import cnam.gpec.business.Metier;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -112,6 +112,7 @@ public class CampagneDAO {
      */
     public List<Campagne> getCampagneListENCOURSProfilAutre(Integer id) {
         List<Campagne> campagneListFind = null;
+         List<Evaluation> evaluationListFind = null;
         
         EntityManager em = null;
         try {
@@ -119,8 +120,21 @@ public class CampagneDAO {
             em.getTransaction().begin();
             // utilisation de l'EntityManager
             
-           Query query = em.createQuery("select c from Campagne as c where c.estReferent.idPersonne = :id and c.verrouillerCampagne=FALSE").setParameter("id", id);
-           campagneListFind = query.getResultList();
+           Query query = em.createQuery("select e from Evaluation as e where e.personne.idPersonne = :id").setParameter("id", id);
+           evaluationListFind = query.getResultList();
+           List<Integer> inValues = new ArrayList<Integer>();
+           
+            for (Evaluation evaluation : evaluationListFind) {
+                
+                inValues.add(evaluation.getCampagne().getIdCampagne()); 
+                
+            }
+           
+           
+            Query queryCampagne = em.createQuery("select c from Campagne as c where c.idCampagne IN :id and c.verrouillerCampagne=FALSE").setParameter("id", inValues);
+           campagneListFind = queryCampagne.getResultList();
+           
+           
           
             em.getTransaction().commit();
           
