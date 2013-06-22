@@ -191,8 +191,9 @@ public class CampagneDAO {
      * @param id
      * @return campagneFind
      */
-    public List<Campagne> getCampagneListTERMINEEProfilAutre(Integer idCentre) {
+    public List<Campagne> getCampagneListTERMINEEProfilAutre(Integer id) {
         List<Campagne> campagneListFind = null;
+         List<Evaluation> evaluationListFind = null;
         
         EntityManager em = null;
         try {
@@ -200,8 +201,21 @@ public class CampagneDAO {
             em.getTransaction().begin();
             // utilisation de l'EntityManager
             
-           Query query = em.createQuery("select c from Campagne as c where c.campagneCentre.centre.idCentre = :id and c.verrouillerCampagne=TRUE").setParameter("id", idCentre);
-           campagneListFind = query.getResultList();
+           Query query = em.createQuery("select e from Evaluation as e where e.personne.idPersonne = :id").setParameter("id", id);
+           evaluationListFind = query.getResultList();
+           List<Integer> inValues = new ArrayList<Integer>();
+           
+            for (Evaluation evaluation : evaluationListFind) {
+                
+                inValues.add(evaluation.getCampagne().getIdCampagne()); 
+                
+            }
+           
+           
+            Query queryCampagne = em.createQuery("select c from Campagne as c where c.idCampagne IN :id and c.verrouillerCampagne=TRUE").setParameter("id", inValues);
+           campagneListFind = queryCampagne.getResultList();
+           
+           
           
             em.getTransaction().commit();
           
