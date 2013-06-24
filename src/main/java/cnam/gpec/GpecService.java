@@ -125,8 +125,7 @@ public class GpecService {
         return competenceFind;
 
     }
-    
-    
+
     /**
      * Récupérer une personne à partir de son identifiant
      */
@@ -177,18 +176,23 @@ public class GpecService {
         List<Campagne> campagneList = null;
 
         // Regarde le profil
-        // Si FORMATEUR
-        if (getCompteAcces(id).getRole().getIdRole().equals(4)) {
+       
+        if (getCompteAcces(id).getRole().getIdRole().equals(3)) {
             initCampagneDao();
             campagneList = campagneDAO.getCampagneListENCOURSProfilReferent(new Integer(id));
             closeCampagneDao();
+        } else if (getCompteAcces(id).getRole().getIdRole().equals(4)) {
+            initCampagneDao();
+            campagneList = campagneDAO.getCampagneListENCOURSProfilAutre(new Integer(id));
+            closeCampagneDao();
+
         } else {
             initCampagneDao();
             campagneList = campagneDAO.getCampagneListENCOURSProfilAutre(new Integer(id));
             closeCampagneDao();
 
         }
-
+    
         return campagneList;
     }
 
@@ -224,21 +228,43 @@ public class GpecService {
     public String persistCampagne(@WebParam(name = "campagne") Campagne campagne) {
         String messageCreate = null;
         String action = null;
-        //TEST 
-        campagne = new Campagne();
-        campagne.setIntituleCampagneLb("Campagne TEST");
-
 
         initCampagneDao();
-        if (campagne.getIdCampagne()== null) {
+        if (campagne.getIdCampagne() == null) {
             action = "créée.";
             campagneDAO.persist(campagne);
         } else {
             action = "modifiée.";
             campagneDAO.merge(campagne);
         }
-         closeCampagneDao();
-        messageCreate = "La campagne : " + campagne.getIntituleCampagneLb()+ " a été " + action;
+        closeCampagneDao();
+        messageCreate = "La campagne : " + campagne.getIntituleCampagneLb() + " a été " + action;
+
+        return messageCreate;
+    }
+
+    /**
+     * Verrouiller une campagne
+     */
+    @WebMethod(operationName = "verrouillerCampagne")
+    public String verrouillerCampagne(@WebParam(name = "campagne") Campagne campagne) {
+        String messageCreate = null;
+        String action = null;
+
+        // Verrouille la campagne donné en paramètre        
+        campagne.setVerrouillerCampagne(true);
+        action = "verrouillée.";
+
+        initCampagneDao();
+        if (campagne.getIdCampagne() == null) {
+
+            campagneDAO.persist(campagne);
+        } else {
+
+            campagneDAO.merge(campagne);
+        }
+        closeCampagneDao();
+        messageCreate = "La campagne : " + campagne.getIntituleCampagneLb() + " a été " + action;
 
         return messageCreate;
     }
@@ -280,18 +306,18 @@ public class GpecService {
     public String persistEvaluation(@WebParam(name = "evaluation") Evaluation evaluation) {
         String messageCreate = null;
         String action = null;
-       
+
 
 
         initCampagneDao();
-        if (evaluation.getIdEvaluation()== null) {
+        if (evaluation.getIdEvaluation() == null) {
             action = "créée.";
             evaluationDAO.persist(evaluation);
         } else {
             action = "modifiée.";
             evaluationDAO.merge(evaluation);
         }
-         closeCampagneDao();
+        closeCampagneDao();
         messageCreate = "L'évaluation a été " + action;
 
         return messageCreate;
@@ -304,18 +330,18 @@ public class GpecService {
     public String persistCompetence(@WebParam(name = "competence") Competence competence) {
         String messageCreate = null;
         String action = null;
-       
+
 
 
         initCampagneDao();
-        if (competence.getIdCompetence()== null) {
+        if (competence.getIdCompetence() == null) {
             action = "créée.";
             competenceDAO.persist(competence);
         } else {
             action = "modifiée.";
             competenceDAO.merge(competence);
         }
-         closeCampagneDao();
+        closeCampagneDao();
         messageCreate = "La compétence a été " + action;
 
         return messageCreate;
@@ -376,9 +402,8 @@ public class GpecService {
 
         return compteAccesFind;
     }
-    
-    
-     /**
+
+    /**
      * Créer/modifier un compte d'accès
      */
     @WebMethod(operationName = "persistCompteAcces")
@@ -386,10 +411,10 @@ public class GpecService {
         String messageCreate = null;
         String action = null;
 
-        
+
 
         initCompteAccesDao();
-        if (compteAcces.getIdCompteAcces()== null) {
+        if (compteAcces.getIdCompteAcces() == null) {
             action = "créé.";
             compteAccesDAO.persist(compteAcces);
         } else {
@@ -399,12 +424,12 @@ public class GpecService {
 
 
         closeCompteAccesDao();
-        messageCreate = "Le compte d'accès : " + compteAcces.getIdCompteAcces()+ " a été " + action;
+        messageCreate = "Le compte d'accès : " + compteAcces.getIdCompteAcces() + " a été " + action;
 
         return messageCreate;
     }
-    
-      /**
+
+    /**
      * Créer/modifier une personne
      */
     @WebMethod(operationName = "persistPersonne")
@@ -412,11 +437,11 @@ public class GpecService {
         String messageCreate = null;
         String action = null;
 
-        
-        
-        
+
+
+
         initPersonneDao();
-        if (personne.getIdPersonne()== null) {
+        if (personne.getIdPersonne() == null) {
             action = "créé.";
             personneDAO.persist(personne);
         } else {
@@ -426,7 +451,7 @@ public class GpecService {
 
 
         closePersonneDao();
-        messageCreate = "La personne : " + personne.getNomLb()+ " "+ personne.getPrenomLb()+ " a été " + action;
+        messageCreate = "La personne : " + personne.getNomLb() + " " + personne.getPrenomLb() + " a été " + action;
 
         return messageCreate;
     }
@@ -493,8 +518,8 @@ public class GpecService {
     private void closeCampagneDao() {
         campagneDAO.close();
     }
-    
-     private void initPersonneDao() {
+
+    private void initPersonneDao() {
         personneDAO = new PersonneDAO();
         personneDAO.init();
     }

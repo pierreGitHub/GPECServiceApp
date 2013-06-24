@@ -59,6 +59,7 @@ public class Campagne implements Serializable {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumns({@JoinColumn(name="id_campagne"),@JoinColumn(name="id_centre")})
     private List<CampagneCentre> campagneCentre ;
+    
 
     public Personne getEstReferent() {
         return estReferent;
