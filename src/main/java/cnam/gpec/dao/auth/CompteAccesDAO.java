@@ -85,12 +85,10 @@ public class CompteAccesDAO {
             em.getTransaction().begin();
             // utilisation de l'EntityManager
             
-           Query query = em.createQuery("select c from CompteAcces as c");
+           Query query = em.createQuery("select c from CompteAcces as c").setParameter("login", compteAcces.getLogin()).setParameter("password", compteAcces.getPassword());
          //  List<Competence> competencesList = query.getResultList();
-           
-            System.out.println("tet");
-           //competenceFind = competencesList.get(1);
-            compteAccesFind = em.find(CompteAcces.class,compteAcces.getIdCompteAcces());
+          compteAccesFind = query.getSingleResult();
+         
             em.getTransaction().commit();
             System.out.println("getCompteAcces with id=" + compteAccesFind.getIdCompteAcces());
             
