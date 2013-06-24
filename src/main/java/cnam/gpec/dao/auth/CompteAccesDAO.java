@@ -87,7 +87,7 @@ public class CompteAccesDAO {
             
            Query query = em.createQuery("select c from CompteAcces as c").setParameter("login", compteAcces.getLogin()).setParameter("password", compteAcces.getPassword());
          //  List<Competence> competencesList = query.getResultList();
-          compteAccesFind = query.getSingleResult();
+          compteAccesFind = (CompteAcces)query.getSingleResult();
          
             em.getTransaction().commit();
             System.out.println("getCompteAcces with id=" + compteAccesFind.getIdCompteAcces());
